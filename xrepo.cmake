@@ -536,7 +536,8 @@ macro(_xrepo_fetch_json)
             endif()
         endif()
 
-        if (NOT ARG_USE_ABSOLUTE_LIBS)
+        string(JSON libfiles_type ERROR_VARIABLE libfiles_error TYPE ${json_output} ${idx} "libfiles")
+        if ( (NOT ARG_USE_ABSOLUTE_LIBS) OR (NOT "${libfiles_type}" MATCHES "STRING|ARRAY|OBJECT") )
             set (links_tag "links")
             # Loop over linkdirs.
             string(JSON linkdirs_type ERROR_VARIABLE linkdirs_error TYPE ${json_output} ${idx} "linkdirs")
